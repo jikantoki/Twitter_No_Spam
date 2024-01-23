@@ -21,9 +21,17 @@ const isJapanese = (string) => {
 
 console.log('Twitter No Spam is active')
 setInterval(() => {
+  if (!location.pathname.includes('/status/')) {
+    return
+  }
   const sections = document.querySelectorAll('section>div>div')
   if (sections.length) {
+    let count = 0
     for (item of sections[0].children) {
+      if (!count) {
+        count++
+        continue
+      }
       if (item.dataset.testid === 'cellInnerDiv' && item.children[0]) {
         /** ポスト関係のdivならTrue、それ以外はundefined */
         const isPost = item.children[0].children[0]
@@ -48,6 +56,11 @@ setInterval(() => {
             /** 公式アカウント察知用 */
             let svg = aTag.querySelector('div>div>span>svg')
             isOfficial = svg
+            if (svg) {
+              if (svg.ariaLabel != '認証済みアカウント') {
+                isOfficial = false
+              }
+            }
 
             if (!isJapaneseName && isOfficial) {
               /** スパムタグが付いていない場合に、スパムタグを追加 */
