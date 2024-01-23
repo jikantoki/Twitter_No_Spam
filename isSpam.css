@@ -1,0 +1,9 @@
+.is-spam {
+  background-color: red !important;
+  display: none !important;
+}
+.spam-removed {
+  margin: 4px;
+  opacity: 0.7;
+  text-align: center;
+}
