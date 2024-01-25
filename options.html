@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>Options - Twitter No Spam</title>
+    <meta charset="UTF-8" />
+    <style>
+      #app {
+        max-width: 640px;
+        margin: auto;
+      }
+      input[type='text'] {
+        width: 100%;
+      }
+      .option-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin: 4px 0;
+      }
+    </style>
+    <script src="options.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Twitter No Spam</h1>
+      <hr />
+      <h2>オプション</h2>
+      <div class="option">
+        <div class="option-section">
+          <h3 class="option-title">ホワイトリスト</h3>
+          <p class="option-description">
+            確実にスパムではないアカウントに関しては、以下のテキストエリアにTwitter
+            IDをカンマ刻みで入力してください。
+          </p>
+          <div class="option-input-area">
+            <input
+              type="text"
+              placeholder="@twitter,@youtube,@news"
+              id="option-whitelist-textarea"
+            />
+          </div>
+        </div>
+        <div class="option-actions">
+          <button id="option-save-button">保存</button>
+        </div>
+      </div>
+      <hr />
+      <h2>About</h2>
+      <div class="about">
+        <div class="about-section">
+          <h3 class="about-title">リンク</h3>
+          <p class="about-description">
+            <a
+              href="https://github.com/jikantoki/Twitter_No_Spam"
+              target="_blank"
+              >Github</a
+            ><br />
+            <a
+              href="https://chromewebstore.google.com/detail/twitter-no-spam/pohkfjndbakfgfaffloiecnfkaaggdbh?hl=ja"
+              target="_blank"
+              >Chrome Webストア</a
+            ><br />
+            <a href="https://twitter.com/jikantoki" target="_blank"
+              >製作者Twitter</a
+            ><br />
+          </p>
+        </div>
+      </div>
+      <hr />
+      <h2>Copyright</h2>
+      <div class="copyright">
+        <p>&copy;ときえのき 2023</p>
+      </div>
+    </div>
+  </body>
+</html>

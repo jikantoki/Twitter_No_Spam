@@ -19,8 +19,29 @@ const isJapanese = (string) => {
   return false
 }
 
+/** オプションの項目 */
+const options = {
+  whitelist: undefined,
+}
+/** セットアップ完了時にtrueにする */
+let setuped = false
+
+/** 読み込み時に動く処理 */
+chrome.storage.sync.get(['whitelist'], (item) => {
+  options.whitelist = item.whitelist.split(',')
+  setuped = true
+})
+
+/** Welcomeメッセージ */
 console.log('Twitter No Spam is active')
+
+/** 定期実行 */
 setInterval(() => {
+  /** セットアップ未完了時に実行しない */
+  if (!setuped) {
+    return
+  }
+  /** URLでリプ欄が表示される場所かを判定 */
   if (!location.pathname.includes('/status/')) {
     return
   }
@@ -41,6 +62,8 @@ setInterval(() => {
           for (aTag of aTags) {
             /** ポストのユーザー名 */
             let username
+            /** ポストのユーザーID */
+            let id
             /** アカウント名は日本語が含まれているか？ */
             let isJapaneseName
             /** 認証バッチはあるか？ */
@@ -64,14 +87,44 @@ setInterval(() => {
 
             if (!isJapaneseName && isOfficial) {
               /** スパムタグが付いていない場合に、スパムタグを追加 */
-              if (!isPost.classList.contains('is-spam')) {
-                console.log(username + 'はアフィカスかも？')
+              if (
+                !isPost.classList.contains('is-spam') &&
+                !isPost.classList.contains('is-not-spam')
+              ) {
+                for (a of aTags) {
+                  if (
+                    a.querySelector('div>span') &&
+                    !a.querySelector('div>span').children[0]
+                  ) {
+                    id = a.querySelector('div>span').innerHTML
+                    break
+                  }
+                }
+
+                let continueFlag = false
+                for (whiteId of options.whitelist) {
+                  if (whiteId === id) {
+                    /** スパムじゃないよタグを付ける */
+                    isPost.classList.add('is-not-spam')
+                    console.log(
+                      `${username}(${id})はホワイトリストに含まれています`
+                    )
+                    continueFlag = true
+                  }
+                }
+                if (continueFlag) {
+                  continue
+                }
+
+                console.log(`${username}(${id})はアフィカスかも？`)
+
+                /** スパムタグを付ける */
                 isPost.classList.add('is-spam')
 
                 /** スパムを削除したことを表示 */
                 const spamRemovedDiv = document.createElement('div')
                 const spamRemovedText = document.createTextNode(
-                  'スパムかもしれないポストを非表示にしました！'
+                  `${username}(${id})のリプを非表示にしました！`
                 )
                 spamRemovedDiv.appendChild(spamRemovedText)
                 spamRemovedDiv.classList.add('spam-removed')
