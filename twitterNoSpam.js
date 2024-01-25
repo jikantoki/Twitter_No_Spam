@@ -21,14 +21,22 @@ const isJapanese = (string) => {
 
 /** オプションの項目 */
 const options = {
-  whitelist: undefined,
+  whitelist: [],
+  viewRemovedAccountInfo: true,
 }
 /** セットアップ完了時にtrueにする */
 let setuped = false
 
 /** 読み込み時に動く処理 */
-chrome.storage.sync.get(['whitelist'], (item) => {
-  options.whitelist = item.whitelist.split(',')
+chrome.storage.sync.get(['whitelist', 'viewRemovedAccountInfo'], (item) => {
+  if (item.whitelist) {
+    options.whitelist = item.whitelist.split(',')
+  }
+  options.viewRemovedAccountInfo = item.viewRemovedAccountInfo
+  if (options.viewRemovedAccountInfo === undefined) {
+    options.viewRemovedAccountInfo = true
+  }
+
   setuped = true
 })
 
@@ -121,14 +129,16 @@ setInterval(() => {
                 /** スパムタグを付ける */
                 isPost.classList.add('is-spam')
 
-                /** スパムを削除したことを表示 */
-                const spamRemovedDiv = document.createElement('div')
-                const spamRemovedText = document.createTextNode(
-                  `${username}(${id})のリプを非表示にしました！`
-                )
-                spamRemovedDiv.appendChild(spamRemovedText)
-                spamRemovedDiv.classList.add('spam-removed')
-                isPost.before(spamRemovedDiv)
+                /** オプションで有効になっている場合は、スパムを削除したことを表示 */
+                if (options.viewRemovedAccountInfo) {
+                  const spamRemovedDiv = document.createElement('div')
+                  const spamRemovedText = document.createTextNode(
+                    `${username}(${id})のリプを非表示にしました！`
+                  )
+                  spamRemovedDiv.appendChild(spamRemovedText)
+                  spamRemovedDiv.classList.add('spam-removed')
+                  isPost.before(spamRemovedDiv)
+                }
               }
             }
           }
@@ -136,4 +146,4 @@ setInterval(() => {
       }
     }
   }
-}, 1000)
+}, 500)

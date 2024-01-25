@@ -16,6 +16,13 @@
         justify-content: flex-end;
         margin: 4px 0;
       }
+      .option-saved-text {
+        font-size: 2em;
+        text-align: center;
+        background-color: #ffe3e3;
+        padding: 1em;
+        display: none;
+      }
     </style>
     <script src="options.js"></script>
   </head>
@@ -39,9 +46,22 @@
             />
           </div>
         </div>
+        <div class="option-section">
+          <h3 class="option-title">非表示にしたアカウントの情報を表示</h3>
+          <p class="option-description">
+            スパムと思われるアカウントを自動非表示した時に、そのアカウントの名前とIDを表示します
+          </p>
+          <div class="option-input-area">
+            <input type="checkbox" id="option-dataview-checkbox" checked />
+            <label for="option-dataview-checkbox">表示するにはチェック</label>
+          </div>
+        </div>
         <div class="option-actions">
           <button id="option-save-button">保存</button>
         </div>
+        <p class="option-saved-text" id="option-saved-text">
+          設定を保存しました！
+        </p>
       </div>
       <hr />
       <h2>About</h2>
