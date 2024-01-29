@@ -9,7 +9,7 @@
         margin: auto;
       }
       input[type='text'] {
-        width: 100%;
+        width: -webkit-fill-available;
       }
       .option-actions {
         display: flex;
@@ -23,15 +23,22 @@
         padding: 1em;
         display: none;
       }
+      .option,
+      .about,
+      .copyright {
+        border-radius: 16px;
+        border: solid 1px;
+        padding: 8px;
+        margin: 8px 0;
+      }
     </style>
     <script src="options.js"></script>
   </head>
   <body>
     <div id="app">
       <h1>Twitter No Spam</h1>
-      <hr />
-      <h2>オプション</h2>
-      <div class="option">
+      <div class="option" id="option">
+        <h2>オプション</h2>
         <div class="option-section">
           <h3 class="option-title">ホワイトリスト</h3>
           <p class="option-description">
@@ -46,6 +53,37 @@
             />
           </div>
         </div>
+        <hr />
+        <div class="option-section">
+          <h3 class="option-title">ブラックリスト</h3>
+          <p class="option-description">
+            自動的に非表示にしたいアカウントに関しては、以下のテキストエリアにTwitter
+            IDをカンマ刻みで入力してください。
+          </p>
+          <div class="option-input-area">
+            <input
+              type="text"
+              placeholder="@twitter,@youtube,@news"
+              id="option-blacklist-textarea"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="option-section">
+          <h3 class="option-title">ブラックワードリスト</h3>
+          <p class="option-description">
+            強制で非表示にしたい単語は、以下のテキストエリアにカンマ刻みで入力してください。
+          </p>
+          <div class="option-input-area">
+            <input
+              type="text"
+              placeholder="プロフみて,プロフ見て"
+              value="プロフみて,プロフ見て"
+              id="option-blackwordlist-textarea"
+            />
+          </div>
+        </div>
+        <hr />
         <div class="option-section">
           <h3 class="option-title">非表示にしたアカウントの情報を表示</h3>
           <p class="option-description">
@@ -63,9 +101,8 @@
           設定を保存しました！
         </p>
       </div>
-      <hr />
-      <h2>About</h2>
       <div class="about">
+        <h2>About</h2>
         <div class="about-section">
           <h3 class="about-title">リンク</h3>
           <p class="about-description">
@@ -85,9 +122,8 @@
           </p>
         </div>
       </div>
-      <hr />
-      <h2>Copyright</h2>
       <div class="copyright">
+        <h2>Copyright</h2>
         <p>&copy;ときえのき 2023</p>
       </div>
     </div>

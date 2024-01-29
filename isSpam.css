@@ -1,4 +1,5 @@
-.is-spam {
+.is-spam,
+.is-spam-text {
   background-color: red !important;
   display: none !important;
 }
