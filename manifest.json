@@ -1,6 +1,6 @@
 {
   "name": "Twitter No Spam",
-  "description": "Twitter(X)のスパムコメントを排除、厳密には認証済みかつアカウント名に日本語が含まれていないものを非表示にします",
+  "description": "Twitter(X)のスパムコメントを排除、厳密には認証済みかつアカウント名に日本語が含まれていないものを非表示にします。また、URLや絵文字のみのリプライも非表示になるほか、単語で自動的に非表示にする機能もあります",
   "version": "1.3.0",
   "manifest_version": 3,
   "permissions": ["storage"],
